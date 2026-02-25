@@ -1,0 +1,34 @@
+{
+  "tabs": {
+    "games": "Игры",
+    "studios": "Студии",
+    "settings": "Настройки"
+  },
+  "settings": {
+    "title": "Настройки",
+    "theme": "Темная тема",
+    "language": "Язык"
+  },
+  "studios": {
+    "title": "Студии",
+    "add": "Добавить студию",
+    "empty": "Пока нет студий. Нажмите + чтобы добавить!",
+    "namePlaceholder": "Название студии",
+    "descPlaceholder": "Описание",
+    "ratingPlaceholder": "Рейтинг (1 - 5)",
+    "save": "Сохранить",
+    "delete": "Удалить"
+  },
+  "games": {
+    "title": "Игры",
+    "add": "Добавить игру",
+    "empty": "Пока нет игр. Сначала добавьте студию, а затем игру!",
+    "titlePlaceholder": "Название игры",
+    "genrePlaceholder": "Жанр (например, RPG, Шутер)",
+    "yearPlaceholder": "Год выпуска",
+    "ratingPlaceholder": "Рейтинг (1 - 5)",
+    "selectStudio": "Выберите студию:",
+    "save": "Сохранить",
+    "delete": "Удалить"
+  }
+}

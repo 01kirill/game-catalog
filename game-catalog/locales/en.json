@@ -1,0 +1,34 @@
+{
+  "tabs": {
+    "games": "Games",
+    "studios": "Studios",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Dark Theme",
+    "language": "Language"
+  },
+  "studios": {
+    "title": "Studios",
+    "add": "Add Studio",
+    "empty": "No studios yet. Tap + to add one!",
+    "namePlaceholder": "Studio Name",
+    "descPlaceholder": "Description",
+    "ratingPlaceholder": "Rating (1 to 5)",
+    "save": "Save",
+    "delete": "Delete"
+  },
+  "games": {
+    "title": "Games",
+    "add": "Add Game",
+    "empty": "No games yet. Add a studio first, then add a game!",
+    "titlePlaceholder": "Game Title",
+    "genrePlaceholder": "Genre (e.g. RPG, Shooter)",
+    "yearPlaceholder": "Release Year",
+    "ratingPlaceholder": "Rating (1 to 5)",
+    "selectStudio": "Select Studio:",
+    "save": "Save",
+    "delete": "Delete"
+  }
+}
