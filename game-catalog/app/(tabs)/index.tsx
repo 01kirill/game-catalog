@@ -37,7 +37,7 @@ export default function GamesScreen() {
             t('games.delete'),
             `${t('games.delete')} "${title}"?`,
             [
-                { text: 'Отмена', style: 'cancel' },
+                { text: t('common.cancel'), style: 'cancel' },
                 {
                     text: t('games.delete'),
                     style: 'destructive',

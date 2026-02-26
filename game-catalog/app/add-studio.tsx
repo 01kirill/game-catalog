@@ -54,7 +54,7 @@ export default function AddStudioScreen() {
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
             <View style={[styles.container, { backgroundColor: bgColor }]}>
                 <Text style={[styles.title, { color: textColor }]}>
-                    {editId ? 'Редактировать студию' : t('studios.add')}
+                    {editId ? t('studios.edit') : t('studios.add')}
                 </Text>
                 <TextInput
                     style={[styles.input, { backgroundColor: inputBg, color: textColor }]}

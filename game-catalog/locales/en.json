@@ -1,4 +1,7 @@
 {
+  "common": {
+    "cancel": "Cancel"
+  },
   "tabs": {
     "games": "Games",
     "studios": "Studios",
@@ -12,6 +15,7 @@
   "studios": {
     "title": "Studios",
     "add": "Add Studio",
+    "edit": "Edit Studio",
     "empty": "No studios yet. Tap + to add one!",
     "namePlaceholder": "Studio Name",
     "descPlaceholder": "Description",
@@ -22,6 +26,7 @@
   "games": {
     "title": "Games",
     "add": "Add Game",
+    "edit": "Edit Game",
     "empty": "No games yet. Add a studio first, then add a game!",
     "titlePlaceholder": "Game Title",
     "genrePlaceholder": "Genre (e.g. RPG, Shooter)",

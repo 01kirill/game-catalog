@@ -34,7 +34,7 @@ export default function StudiosScreen() {
             t('studios.delete'),
             `${t('studios.delete')} "${name}"?`,
             [
-                { text: 'Отмена', style: 'cancel' },
+                { text: t('common.cancel'), style: 'cancel' },
                 {
                     text: t('studios.delete'),
                     style: 'destructive',

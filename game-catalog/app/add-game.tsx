@@ -66,7 +66,7 @@ export default function AddGameScreen() {
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
             <ScrollView style={[styles.container, { backgroundColor: bgColor }]}>
                 <Text style={[styles.title, { color: textColor }]}>
-                    {editId ? (theme === 'dark' ? 'Edit Game' : 'Редактировать игру') : t('games.add')}
+                    {editId ? t('games.edit') : t('games.add')}
                 </Text>
 
                 <TextInput
