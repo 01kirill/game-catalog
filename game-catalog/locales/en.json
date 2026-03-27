@@ -5,7 +5,8 @@
   "tabs": {
     "games": "Games",
     "studios": "Studios",
-    "settings": "Settings"
+    "settings": "Settings",
+    "explore": "Explore"
   },
   "settings": {
     "title": "Settings",
@@ -35,5 +36,9 @@
     "selectStudio": "Select Studio:",
     "save": "Save",
     "delete": "Delete"
+  },
+  "explore": {
+    "title": "Online",
+    "offline": "No connection. Showing cached data."
   }
 }

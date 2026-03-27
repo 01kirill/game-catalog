@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
-import { Gamepad2, Building2, Settings } from 'lucide-react-native';
+import {Gamepad2, Building2, Settings, Globe} from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
-import { useSettingsStore } from '../../store/useSettingsStore';
+import { useSettingsStore } from '@/store/useSettingsStore';
 
 export default function TabLayout() {
     const { t } = useTranslation();
@@ -41,6 +41,14 @@ export default function TabLayout() {
                 options={{
                     title: t('tabs.studios'),
                     tabBarIcon: ({ color }) => <Building2 size={24} color={color} />,
+                }}
+            />
+
+            <Tabs.Screen
+                name="explore"
+                options={{
+                    title: t('tabs.explore'),
+                    tabBarIcon: ({ color }) => <Globe size={24} color={color} />,
                 }}
             />
 
