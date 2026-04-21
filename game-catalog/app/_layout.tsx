@@ -5,10 +5,21 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { initDatabase } from '../database/db';
+import { initDatabase } from '@/database/db';
 import '../locales/i18n';
 import i18n from '../locales/i18n';
-import { useSettingsStore } from '../store/useSettingsStore';
+import { useSettingsStore } from '@/store/useSettingsStore';
+
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+        shouldShowBanner: true,
+        shouldShowList: true,
+    }),
+});
 
 SplashScreen.preventAutoHideAsync();
 

@@ -40,5 +40,21 @@
   "explore": {
     "title": "Online",
     "offline": "No connection. Showing cached data."
+  },
+  "tools": {
+    "searchGames": "Fuzzy games search...",
+    "searchStudios": "Search studios...",
+    "sortName": "Name",
+    "sortRating": "Rating",
+    "sortYear": "Year",
+    "filterAll": "All",
+    "filterGenre": "Genre:",
+    "filterRating": "Score:"
+  },
+  "notifications": {
+    "scheduledTitle": "Game Reminder 🎮",
+    "scheduledBody": "It's time to play {{title}}!",
+    "alertTitle": "Notification Set",
+    "alertBody": "Reminder for \"{{title}}\" will arrive in 10 seconds."
   }
 }

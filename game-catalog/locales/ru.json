@@ -40,5 +40,21 @@
   "explore": {
     "title": "Онлайн",
     "offline": "Нет сети. Показаны кэшированные данные."
+  },
+  "tools": {
+    "searchGames": "Поиск игр (нечеткий)...",
+    "searchStudios": "Поиск студий...",
+    "sortName": "Название",
+    "sortRating": "Рейтинг",
+    "sortYear": "Год",
+    "filterAll": "Все",
+    "filterGenre": "Жанр:",
+    "filterRating": "Оценка:"
+  },
+  "notifications": {
+    "scheduledTitle": "Напоминание об игре 🎮",
+    "scheduledBody": "Пора поиграть в {{title}}!",
+    "alertTitle": "Уведомление установлено",
+    "alertBody": "Напоминание для \"{{title}}\" придет через 10 секунд."
   }
 }
