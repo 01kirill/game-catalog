@@ -1,6 +1,9 @@
 {
   "common": {
-    "cancel": "Cancel"
+    "save": "Save",
+    "cancel": "Cancel",
+    "success": "Success",
+    "error": "Error"
   },
   "tabs": {
     "games": "Games",
@@ -25,6 +28,11 @@
     "delete": "Delete"
   },
   "games": {
+    "pickImage": "Select Cover",
+    "changeImage": "Change Cover",
+    "saveCloud": "Save to Firebase",
+    "cloudSuccess": "Data synced with cloud!",
+    "cloudError": "Upload error. Check image size or network.",
     "title": "Games",
     "add": "Add Game",
     "edit": "Edit Game",

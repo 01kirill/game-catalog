@@ -12,4 +12,5 @@ export interface Game {
     releaseYear: number;
     rating: number;
     studioId: number;
+    imageUrl?: string;
 }

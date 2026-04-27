@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, TextInput, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, TextInput, ScrollView, Image } from 'react-native';
 import { useFocusEffect, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Plus, Trash2, Star, Calendar, Gamepad2, Edit2, Search, Bell, ArrowUp, ArrowDown } from 'lucide-react-native';
@@ -73,6 +73,12 @@ export default function GamesScreen() {
 
     const renderItem = ({ item }: { item: Game }) => (
         <View style={[styles.card, { backgroundColor: cardBg }]}>
+            {item.imageUrl && (
+                <Image
+                    source={{ uri: item.imageUrl }}
+                    style={{ width: '100%', height: 150, borderRadius: 12, marginBottom: 12 }}
+                />
+            )}
             <View style={styles.cardHeader}>
                 <Text style={[styles.title, { color: textColor }]}>{item.title}</Text>
                 <View style={styles.actionButtons}>

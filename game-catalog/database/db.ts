@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { Game, Studio } from '../types';
+import { Game, Studio } from '@/types';
 
 const db = SQLite.openDatabaseSync('gamecatalog.db');
 
@@ -19,9 +19,14 @@ export const initDatabase = () => {
                                              releaseYear INTEGER,
                                              rating REAL,
                                              studioId INTEGER,
+                                             imageUrl TEXT,
                                              FOREIGN KEY (studioId) REFERENCES studios (id) ON DELETE CASCADE
             );
     `);
+    try {
+        db.execSync(`ALTER TABLE games
+            ADD COLUMN imageUrl TEXT;`);
+    } catch {}
 };
 
 export const getStudios = (): Studio[] => db.getAllSync<Studio>('SELECT * FROM studios ORDER BY name ASC;');
@@ -49,12 +54,18 @@ export const getGameById = (id: number): Game | null => {
     return db.getFirstSync<Game>('SELECT * FROM games WHERE id = ?', [id]);
 };
 
-export const addGame = (title: string, genre: string, releaseYear: number, rating: number, studioId: number) => {
-    db.runSync('INSERT INTO games (title, genre, releaseYear, rating, studioId) VALUES (?, ?, ?, ?, ?)', [title, genre, releaseYear, rating, studioId]);
+export const addGame = (title: string, genre: string, releaseYear: number, rating: number, studioId: number, imageUrl?: string) => {
+    db.runSync(
+        'INSERT INTO games (title, genre, releaseYear, rating, studioId, imageUrl) VALUES (?, ?, ?, ?, ?, ?)',
+        [title, genre, releaseYear, rating, studioId, imageUrl || null]
+    );
 };
 
-export const updateGame = (id: number, title: string, genre: string, releaseYear: number, rating: number, studioId: number) => {
-    db.runSync('UPDATE games SET title = ?, genre = ?, releaseYear = ?, rating = ?, studioId = ? WHERE id = ?', [title, genre, releaseYear, rating, studioId, id]);
+export const updateGame = (id: number, title: string, genre: string, releaseYear: number, rating: number, studioId: number, imageUrl?: string) => {
+    db.runSync(
+        'UPDATE games SET title = ?, genre = ?, releaseYear = ?, rating = ?, studioId = ?, imageUrl = ? WHERE id = ?',
+        [title, genre, releaseYear, rating, studioId, imageUrl || null, id]
+    );
 };
 
 export const deleteGame = (id: number) => {
