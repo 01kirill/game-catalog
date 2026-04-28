@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Keyboa
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
-import { Image as ImageIcon, CloudUpload } from 'lucide-react-native';
+import { Image as ImageIcon, CloudUpload, Camera } from 'lucide-react-native';
 
 import { addGame, updateGame, getGameById, getStudios } from '@/database/db';
 import { useSettingsStore } from '@/store/useSettingsStore';
@@ -49,6 +49,27 @@ export default function AddGameScreen() {
         }
     }, [editId]);
 
+    const takePhoto = async () => {
+        const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+        if (permissionResult.granted === false) {
+            Alert.alert(t('common.error'), t('games.cameraError'));
+            return;
+        }
+
+        let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [16, 9],
+            quality: 0.1,
+            base64: true,
+        });
+
+        if (!result.canceled && result.assets[0]) {
+            setImageUri(result.assets[0].uri);
+            setImageBase64(`data:image/jpeg;base64,${result.assets[0].base64}`);
+        }
+    };
+
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
@@ -75,10 +96,13 @@ export default function AddGameScreen() {
             ratingNum = Math.round(ratingNum * 100) / 100;
 
             const gameData = {
-                title, genre, releaseYear, rating: ratingNum,
+                title,
+                genre,
+                releaseYear,
+                rating: ratingNum,
                 studioId: selectedStudioId,
                 imageUrl: imageBase64 || imageUri,
-                updatedAt: new Date().toISOString()
+                createdAt: new Date().toISOString()
             };
 
             await FirebaseService.saveGameToCloud(gameData);
@@ -159,6 +183,11 @@ export default function AddGameScreen() {
                 <TouchableOpacity onPress={pickImage} style={[styles.imageBtn, { backgroundColor: inputBg, borderColor, borderWidth: 1 }]}>
                     <ImageIcon size={24} color={textColor} style={{ marginRight: 8 }} />
                     <Text style={{ color: textColor }}>{imageUri ? t('games.changeImage') : t('games.pickImage')}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={takePhoto} style={[styles.imageBtn, { flex: 1, backgroundColor: inputBg, borderColor, borderWidth: 1, marginBottom: 0 }]}>
+                    <Camera size={24} color={textColor} style={{ marginRight: 8 }} />
+                    <Text style={{ color: textColor }}>Камера</Text>
                 </TouchableOpacity>
 
                 {imageUri && (

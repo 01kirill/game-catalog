@@ -1,4 +1,20 @@
 {
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Registration",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "loginBtn": "Sign In",
+    "registerBtn": "Sign Up",
+    "goToRegister": "No account? Create one",
+    "goToLogin": "Already have an account? Sign in",
+    "regSuccess": "Registration successful! You can now log in.",
+    "passMismatch": "Passwords do not match!",
+    "emptyFields": "Please fill in all fields",
+    "logout": "Log Out",
+    "invalidCredentials": "Invalid email or password"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
@@ -43,7 +59,9 @@
     "ratingPlaceholder": "Rating (1 to 5)",
     "selectStudio": "Select Studio:",
     "save": "Save",
-    "delete": "Delete"
+    "delete": "Delete",
+    "shareMessage": "Look what game I found: {{title}}! Genre: {{genre}}, Rating: {{rating}}/5. 🎮",
+    "cameraError": "Camera permission is required!"
   },
   "explore": {
     "title": "Online",
@@ -63,6 +81,7 @@
     "scheduledTitle": "Game Reminder 🎮",
     "scheduledBody": "It's time to play {{title}}!",
     "alertTitle": "Notification Set",
-    "alertBody": "Reminder for \"{{title}}\" will arrive in 10 seconds."
+    "alertBody": "Reminder for \"{{title}}\" will arrive in 10 seconds.",
+    "noPermission": "No notification permission granted"
   }
 }

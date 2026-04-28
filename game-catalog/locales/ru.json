@@ -1,4 +1,20 @@
 {
+  "auth": {
+    "loginTitle": "Авторизация",
+    "registerTitle": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "loginBtn": "Войти",
+    "registerBtn": "Зарегистрироваться",
+    "goToRegister": "Нет аккаунта? Создать",
+    "goToLogin": "Уже есть аккаунт? Войти",
+    "regSuccess": "Регистрация успешна! Теперь вы можете войти.",
+    "passMismatch": "Пароли не совпадают!",
+    "emptyFields": "Заполните все поля",
+    "logout": "Выйти из аккаунта",
+    "invalidCredentials": "Неверный email или пароль"
+  },
   "common": {
     "save": "Сохранить",
     "cancel": "Отмена",
@@ -43,7 +59,9 @@
     "ratingPlaceholder": "Рейтинг (1 - 5)",
     "selectStudio": "Выберите студию:",
     "save": "Сохранить",
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "shareMessage": "Смотри, какую игру я нашел: {{title}}! Жанр: {{genre}}, Рейтинг: {{rating}}/5. 🎮",
+    "cameraError": "Нужно разрешение на использование камеры!"
   },
   "explore": {
     "title": "Онлайн",
@@ -63,6 +81,7 @@
     "scheduledTitle": "Напоминание об игре 🎮",
     "scheduledBody": "Пора поиграть в {{title}}!",
     "alertTitle": "Уведомление установлено",
-    "alertBody": "Напоминание для \"{{title}}\" придет через 10 секунд."
+    "alertBody": "Напоминание для \"{{title}}\" придет через 10 секунд.",
+    "noPermission": "Нет разрешения на уведомления"
   }
 }

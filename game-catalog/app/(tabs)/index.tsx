@@ -1,11 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, TextInput, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, TextInput, ScrollView, Image, Share } from 'react-native';
 import { useFocusEffect, router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Plus, Trash2, Star, Calendar, Gamepad2, Edit2, Search, Bell, ArrowUp, ArrowDown } from 'lucide-react-native';
+import { Plus, Trash2, Star, Calendar, Gamepad2, Edit2, Search, Bell, ArrowUp, ArrowDown, Share2 } from 'lucide-react-native';
 import * as Notifications from 'expo-notifications';
+import { collection, onSnapshot, query, orderBy, deleteDoc, doc } from 'firebase/firestore';
 
-import { getGames, getStudios, deleteGame } from '@/database/db';
+import { getStudios } from '@/database/db';
+import { db } from '@/services/firebaseConfig';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useGamesTools } from '@/hooks/useGameTools';
 import { Game, Studio } from '@/types';
@@ -34,21 +36,57 @@ export default function GamesScreen() {
     useEffect(() => {
         (async () => {
             const { status } = await Notifications.requestPermissionsAsync();
-            if (status !== 'granted') console.log('Нет разрешения на уведомления');
+            if (status !== 'granted') console.log(t('notifications.noPermission'));
         })();
+    }, []);
+
+    useEffect(() => {
+        console.log('📡 Подключаемся к Firebase...');
+        const q = query(collection(db, 'games'), orderBy('createdAt', 'desc'));
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            console.log(`Скачано игр из облака: ${snapshot.size}`); // Увидишь количество в консоли
+
+            const cloudGames = snapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id as any,
+                    title: data.title || 'No Title',
+                    genre: data.genre || '',
+                    releaseYear: data.releaseYear || 0,
+                    rating: data.rating || 0,
+                    studioId: data.studioId || 0,
+                    imageUrl: data.imageUrl || null,
+                } as Game;
+            });
+            setGames(cloudGames);
+        }, (error) => {
+            console.error('❌ Ошибка Firestore:', error); // Если нет индекса, тут будет ссылка на его создание
+        });
+
+        return () => unsubscribe();
     }, []);
 
     useFocusEffect(
         useCallback(() => {
-            setGames(getGames());
             setStudios(getStudios());
         }, [])
     );
 
-    const handleDelete = (id: number, title: string) => {
+    const handleDelete = (id: string, title: string) => {
         Alert.alert(t('common.cancel'), `${t('games.delete')} "${title}"?`, [
             { text: t('common.cancel'), style: 'cancel' },
-            { text: t('games.delete'), style: 'destructive', onPress: () => { deleteGame(id); setGames(getGames()); } }
+            {
+                text: t('games.delete'),
+                style: 'destructive',
+                onPress: async () => {
+                    try {
+                        await deleteDoc(doc(db, 'games', id));
+                    } catch (error) {
+                        Alert.alert(t('common.error'), 'Не удалось удалить игру из облака');
+                    }
+                }
+            }
         ]);
     };
 
@@ -66,6 +104,20 @@ export default function GamesScreen() {
         Alert.alert(t('notifications.alertTitle'), t('notifications.alertBody', { title }));
     };
 
+    const shareGame = async (game: Game) => {
+        try {
+            await Share.share({
+                message: t('games.shareMessage', {
+                    title: game.title,
+                    genre: game.genre,
+                    rating: game.rating
+                }),
+            });
+        } catch (error: any) {
+            Alert.alert(t('common.error'), error.message);
+        }
+    };
+
     const getStudioName = (studioId: number) => {
         const studio = studios.find(s => s.id === studioId);
         return studio ? studio.name : 'Unknown Studio';
@@ -79,21 +131,27 @@ export default function GamesScreen() {
                     style={{ width: '100%', height: 150, borderRadius: 12, marginBottom: 12 }}
                 />
             )}
+
             <View style={styles.cardHeader}>
                 <Text style={[styles.title, { color: textColor }]}>{item.title}</Text>
                 <View style={styles.actionButtons}>
+
+                    <TouchableOpacity onPress={() => shareGame(item)} style={{ marginRight: 16 }}>
+                        <Share2 size={20} color="#3b82f6" />
+                    </TouchableOpacity>
+
                     <TouchableOpacity onPress={() => scheduleNotification(item.title)} style={{ marginRight: 16 }}>
                         <Bell size={20} color="#f59e0b" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => router.push({ pathname: '/add-game', params: { id: item.id } })} style={{ marginRight: 16 }}>
-                        <Edit2 size={20} color="#3b82f6" />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleDelete(item.id, item.title)}>
+
+                    <TouchableOpacity onPress={() => handleDelete(item.id.toString(), item.title)}>
                         <Trash2 size={20} color="#ef4444" />
                     </TouchableOpacity>
                 </View>
             </View>
+
             <Text style={[styles.studioName, { color: '#10b981' }]}>{getStudioName(item.studioId)}</Text>
+
             <View style={styles.badgesRow}>
                 <View style={[styles.badge, { backgroundColor: isDark ? '#374151' : '#e5e7eb' }]}>
                     <Gamepad2 size={14} color={descColor} style={{ marginRight: 4 }} />
@@ -114,7 +172,6 @@ export default function GamesScreen() {
     return (
         <View style={[styles.container, { backgroundColor: bgColor }]}>
             <View style={styles.toolsContainer}>
-                {/* Поиск */}
                 <View style={[styles.searchBox, { backgroundColor: cardBg, borderColor, borderWidth: 1 }]}>
                     <Search size={20} color={descColor} style={{ marginRight: 8 }} />
                     <TextInput
@@ -126,7 +183,6 @@ export default function GamesScreen() {
                     />
                 </View>
 
-                {/* Сортировка */}
                 <View style={styles.sortRow}>
                     {(['title', 'rating', 'year'] as const).map(field => (
                         <TouchableOpacity
@@ -144,7 +200,6 @@ export default function GamesScreen() {
                     ))}
                 </View>
 
-                {/* Фильтрация */}
                 <View style={styles.filterRow}>
                     <Text style={[styles.filterLabel, { color: descColor }]}>{t('tools.filterGenre')}</Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -154,7 +209,7 @@ export default function GamesScreen() {
                         >
                             <Text style={genreFilter === null ? styles.filterTextActive : { color: textColor }}>{t('tools.filterAll')}</Text>
                         </TouchableOpacity>
-                        {availableGenres.map(genre => (
+                        {availableGenres.map((genre: string) => (
                             <TouchableOpacity
                                 key={genre}
                                 onPress={() => setGenreFilter(genre)}
