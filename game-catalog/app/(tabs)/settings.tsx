@@ -40,7 +40,7 @@ export default function SettingsScreen() {
                     </View>
                     <View style={styles.profileInfo}>
                         <Text style={[styles.profileLabel, { color: isDarkColors.mutedColor }]}>
-                            {t('auth.loginTitle')} {/* Или можно написать "Ваш аккаунт" */}
+                            {t('auth.loginTitle')}
                         </Text>
                         <Text style={[styles.profileEmail, { color: isDarkColors.textColor }]}>
                             {currentUser?.email || 'Гость'}

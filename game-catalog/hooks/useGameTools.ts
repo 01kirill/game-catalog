@@ -11,7 +11,6 @@ export const useGamesTools = (initialGames: Game[]) => {
     const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
     const [genreFilter, setGenreFilter] = useState<string | null>(null);
 
-    // Автоматически получаем список уникальных жанров из БД для кнопок фильтра
     const availableGenres = useMemo(() => {
         const genres = initialGames.map(g => g.genre).filter(Boolean);
         return Array.from(new Set(genres)).sort();
@@ -25,17 +24,14 @@ export const useGamesTools = (initialGames: Game[]) => {
     const processedGames = useMemo(() => {
         let result = initialGames;
 
-        // 1. Поиск
         if (searchQuery.trim()) {
             result = fuse.search(searchQuery).map(res => res.item);
         }
 
-        // 2. Фильтрация
         if (genreFilter) {
             result = result.filter(game => game.genre === genreFilter);
         }
 
-        // 3. Сортировка (Двусторонняя)
         const modifier = sortDirection === 'asc' ? 1 : -1;
         result = [...result].sort((a, b) => {
             if (sortField === 'rating') return (a.rating - b.rating) * modifier;
@@ -48,10 +44,10 @@ export const useGamesTools = (initialGames: Game[]) => {
 
     const toggleSort = (field: SortField) => {
         if (sortField === field) {
-            setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc'); // Меняем направление
+            setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
         } else {
             setSortField(field);
-            setSortDirection('asc'); // По умолчанию по возрастанию для нового поля
+            setSortDirection('asc');
         }
     };
 

@@ -23,7 +23,6 @@ export const useStudiosTools = (initialStudios: Studio[]) => {
             result = fuse.search(searchQuery).map(res => res.item);
         }
 
-        // Фильтрация: показываем студии, у которых рейтинг больше или равен выбранному фильтру (округленному)
         if (ratingFilter !== null) {
             result = result.filter(studio => Math.floor(studio.rating) === ratingFilter);
         }
